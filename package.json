@@ -4,6 +4,7 @@
   "description": "## Getting Started",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint ./src",
     "start": "parcel -p 3000 index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +20,10 @@
   "homepage": "https://github.com/cirrocumulus-io/registry-ui#readme",
   "dependencies": {
     "parcel-bundler": "^1.12.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
   }
 }

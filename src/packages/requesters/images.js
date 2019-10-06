@@ -20,7 +20,6 @@ const images = [
   },
 ];
 
-
 export const requestImages = () => new Promise((resolve, reject) => {
   setTimeout(() => resolve(images), TIMEOUT);
 });
