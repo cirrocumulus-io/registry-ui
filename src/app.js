@@ -1,27 +1,34 @@
 import { requestImages } from './packages/requesters/images';
 
+const template = document.createElement('template');
+
+template.innerHTML = `
+<h1>Images</h1>
+`;
+
 class App extends HTMLElement {
   constructor() {
     super();
-    console.log('constructeddddddddd!');
+    this.attachShadow({ mode: 'open' });
+    this.component = template.content.cloneNode(true);
   }
 
   connectedCallback() {
-    console.log('connected!');
-    requestImages().then((imgs) => console.log(imgs));
-  }
+    this.shadowRoot.appendChild(this.component);
+    requestImages().then((imgs) => {
+      console.log(imgs);
+      const ulElt = document.createElement('ul');
+      imgs
+        .map((image) => {
+          const imageItemElem = document.createElement('li');
+          imageItemElem.innerHTML = image.name;
+          return imageItemElem;
+        })
+        .forEach((imageItemElem) => ulElt.appendChild(imageItemElem));
 
-  disconnectedCallback() {
-    console.log('disconnected!');
-  }
-
-  attributeChangedCallback(name, oldVal, newVal) {
-    console.log(`Attribute: ${name} changed!`);
-  }
-
-  adoptedCallback() {
-    console.log('adopted!');
+      this.shadowRoot.appendChild(ulElt);
+    });
   }
 }
 
-window.customElements.define('ui-app', App);
+window.customElements.define('cru-app', App);
