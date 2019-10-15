@@ -5,8 +5,8 @@ function App() {
   const [images, setImages] = useState(null);
 
   useEffect(() => {
-    requestImages().then((imgs) => setImages(imgs));
-  });
+    requestImages().then((imgs) => setImages(imgs.data));
+  }, []);
 
   return (
     <div className="App">
