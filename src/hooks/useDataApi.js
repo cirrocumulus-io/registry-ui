@@ -6,18 +6,27 @@ export const useDataApi = (request) => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    let didCancel = false;
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
       try {
         const result = await request();
-        setData(result.data);
+        if (!didCancel) {
+          setData(result.data);
+        }
       } catch (error) {
-        setIsError(true);
+        if (!didCancel) {
+          setIsError(true);
+        }
       }
       setIsLoading(false);
     };
     fetchData();
+
+    return () => {
+      didCancel = true;
+    };
   }, [request]);
   return { data, isLoading, isError };
 };
