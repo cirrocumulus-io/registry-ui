@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { requestImages } from './packages/requesters/images';
+import { useDataApi } from './hooks/useDataApi';
 
 function App() {
-  const [images, setImages] = useState(null);
-
-  useEffect(() => {
-    requestImages().then((imgs) => setImages(imgs.data));
-  }, []);
+  const { data: images, isLoading, isError } = useDataApi(requestImages);
 
   return (
     <div className="App">
       <h1>Images</h1>
+      { isError && <div>Something went wrong ...</div> }
       {
-        (images === null) ? <div>Loading...</div>
+        (isLoading)
+          ? <div>Loading...</div>
           : (
             <table className="table table-bordered">
               <thead>
@@ -34,7 +33,6 @@ function App() {
             </table>
           )
       }
-
     </div>
   );
 }
