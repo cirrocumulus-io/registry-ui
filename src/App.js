@@ -4,7 +4,6 @@ import { useDataApi } from './hooks/useDataApi';
 
 function App() {
   const { data: images, isLoading, isError } = useDataApi(requestImages);
-  console.log({ data: images, isLoading, isError });
 
   return (
     <div className="App">
