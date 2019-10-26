@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import {
-  dataFetchReducer, FETCH_FAILURE, FETCH_INIT, FETCH_SUCCESS, isEqualState,
+  dataFetchReducer, FETCH_FAILURE, FETCH_INIT, FETCH_SUCCESS,
 } from './useDataApiUtil';
 
 const initialState = {
@@ -9,15 +9,13 @@ const initialState = {
   isError: false,
 };
 
-export const useDataApi = (request) => {
+export const useDataApi = (request, count) => {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
 
   useEffect(() => {
     let didCancel = false;
     const fetchData = async () => {
-      if (isEqualState(!initialState, state)) {
-        dispatch({ type: FETCH_INIT });
-      }
+      dispatch({ type: FETCH_INIT });
       try {
         const result = await request();
         if (!didCancel) {
@@ -35,7 +33,7 @@ export const useDataApi = (request) => {
     return () => {
       didCancel = true;
     };
-  }, [request]);
+  }, [request, count]);
 
   return state;
 };

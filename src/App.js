@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { requestImages } from './packages/requesters/images';
-import { useDataApi } from './hooks/useDataApi';
+import { useDataApi } from './hooks/useDataApi/useDataApi';
 
 function App() {
-  const { data: images, isLoading, isError } = useDataApi(requestImages);
+  const [count, setCount] = useState(0);
+  const { data: images, isLoading, isError } = useDataApi(requestImages, count);
 
   return (
     <div className="App">
       <h1>Images</h1>
+      <button type="button" className="btn btn-primary" onClick={() => setCount(count + 1)}>Refresh</button>
       { isError && <div>Something went wrong ...</div> }
       {
         (isLoading)

@@ -27,7 +27,7 @@ const requestImages = () => new Promise((resolve) => {
 });
 
 test('should call api', async () => {
-  const { result, waitForNextUpdate } = renderHook(() => useDataApi(requestImages));
+  const { result, waitForNextUpdate } = renderHook(() => useDataApi(requestImages, 0));
   expect(result.current.isLoading).toBeTruthy();
   expect(result.current.isError).toBeFalsy();
   expect(result.current.data).toBeNull();
